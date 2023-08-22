@@ -1,51 +1,35 @@
-import { extendTheme } from "@chakra-ui/react";
+import { useState } from "react"
+import { Button, Flex, useColorModeValue } from "@chakra-ui/react"
 
-const orangeTheme = {
-    colors: {
-        background: "orange.500",
-        text: "black",
-      },
- }; 
+function randomColor() {
+  return Math.floor(Math.random() * 5)
+}
 
-const redTheme = {
-    colors: {
-        background: "red.400",
-        text: "black" ,
-    }
-        
-}; 
+const colorList = ["#E53E3E", "#38A169", "#00B5D8", "#44337A", "#ED64A6"]
 
-const yellowTheme = {
-    colors: {
-        background: "yellow.500",
-        text: "black" ,
-    }
-        
-}; 
+export default function ClickMe() {
+  const [colorCode, setColorCode] = useState(colorList[randomColor()])
 
-const blueTheme = {
-  colors: {
-    background: "blue.400",
-    text: "black",
-  },
-};
-
-const greenTheme = {
-    colors: {
-        background: "green.400",
-        text: "black",
-      },
-};
-
-const themes = {
-  orange: orangeTheme,
-  red: redTheme,
-  yellow: yellowTheme,
-  blue: blueTheme,
-  green: greenTheme,
-};
-
-// export { themes };
-const initialCustomTheme = extendTheme(orangeTheme);
-
-export { themes, initialCustomTheme };
+  return (
+    <Flex
+      h="100vh"
+      justifyContent="center"
+      alignItems="center"
+      bgColor={`${colorCode}`}
+    >
+      <Button
+        px={8}
+        bg={useColorModeValue("#151f21", "gray.900")}
+        color={"white"}
+        rounded={"md"}
+        _hover={{
+          transform: "translateY(-2px)",
+          boxShadow: "lg"
+        }}
+        onClick={() => setColorCode(colorList[randomColor()])}
+      >
+        Click Me
+      </Button>
+    </Flex>
+  )
+}

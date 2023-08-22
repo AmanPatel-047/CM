@@ -1,9 +1,11 @@
-import React, {useState} from "react"
+import React from "react"
 import MyImg from "../../MyImg.jpeg"
-import {useColorMode, Button} from "@chakra-ui/react"
+import {useColorMode} from "@chakra-ui/react"
 import { BsSun, BsMoonStarsFill } from "react-icons/bs"
 import { Link } from "react-router-dom"
-import {themes} from '../../theme';
+// import {themes} from '../../theme';
+
+
 
 import {
   IconButton,
@@ -30,7 +32,6 @@ import {
   FiTrendingUp,
   FiCompass,
   FiStar,
-  FiSettings,
   FiMenu,
   FiChevronDown,
   FiUser,
@@ -47,17 +48,18 @@ const LinkItems = [
   { name: "Comments", path: '/comments', icon: FiStar },
   { name: "Users",  path: '/users', icon: FiUser },
   { name: "Role",  path: '/roles', icon: FiRadio },
-  { name: "apperence",  path: '/theme', icon: FiSettings },
   { name: "Configuration",  path: '/configuration', icon: FiInfo },
   { name: "Notification",  path: '/notification', icon: FiNavigation }
 ]
 
 const SidebarContent = ({ onClose, ...rest }) => {
+  // const [colorCode, setColorCode] = useState(colorList[randomColor()])
   // const { colorMode, toggleColorMode } = useColorMode()
   return (
     <Box
       transition="3s ease"
       bg={useColorModeValue("white", "gray.900")}
+      // bgColor={`${colorCode}`}
       borderRight="1px"
       borderRightColor={useColorModeValue("gray.200", "gray.700")}
       w={{ base: "full", md: 60 }}
@@ -124,24 +126,7 @@ const NavItem = ({ icon, children, ...rest }) => {
 
 const MobileNav = ({ onOpen, ...rest }) => {
   const { colorMode, toggleColorMode } = useColorMode();
-  const [selectedTheme, setSelectedTheme] = useState("light");
-  const themeOptions = Object.keys(themes);
-
-  const handleThemeChange = () => {
-    const currentIndex = themeOptions.indexOf(selectedTheme);
-    const nextIndex = (currentIndex + 1) % themeOptions.length;
-    setSelectedTheme(themeOptions[nextIndex]);
-    const newTheme = themes[themeOptions[nextIndex]];
-    // customTheme.colors = newTheme.colors;
-    // toggleColorMode(nextIndex);
-    toggleColorMode();
-
-    const updatedCustomTheme = extendTheme({ ...initialCustomTheme, colors: newTheme.colors });
-    setCustomTheme(updatedCustomTheme);
-    
-  };
-
-
+  
 
   // const currentTheme = themes[selectedTheme];
   // const { colorMode, toggleColorMode } = useColorMode()
@@ -184,17 +169,11 @@ const MobileNav = ({ onOpen, ...rest }) => {
         />
         </NavLink>
 
-        <Button onClick={handleThemeChange}>
-        {selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1)}
-      </Button>
+       
 
         <IconButton
         aria-label="Toggle Color Mode"
-        // onClick={() => {
-          
-        //   handleThemeChange();
-        // }}
-        onClick={handleThemeChange}
+        onClick={toggleColorMode}
         _focus={{ boxShadow: "none" }}
         w="fit-content"
         marginRight={5}
@@ -256,7 +235,10 @@ const SidebarWithHeader = ({children}) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
 
   return (
-    <Box minH="100vh" bg={useColorModeValue("gray.100", "gray.900")}>
+    <Box 
+    minH="100vh" 
+    bg={useColorModeValue("gray.100", "gray.900")}
+    >
       <SidebarContent
         onClose={() => onClose}
         display={{ base: "none", md: "block" }}
@@ -277,6 +259,7 @@ const SidebarWithHeader = ({children}) => {
       </Drawer>
       {/* mobilenav */}
       <MobileNav onOpen={onOpen} />
+      
       <Box ml={{ base: 0, md: 60 }} p="4"  bg={useColorModeValue("gray.100", "gray.700")}>
         {children}
         {/* Content */}

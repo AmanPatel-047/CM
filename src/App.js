@@ -1,13 +1,13 @@
+import React from 'react';
 import './App.css';
 import { Route, Routes} from 'react-router-dom';
 // import { ChakraProvider, CSSReset } from "@chakra-ui/react";
-import {themes} from './theme';
 
 
 import SignupCard from './Registration/Register';
 import SimpleCard from './Registration/Login';
 import SidebarWithHeader from './Components/Static/Sidebar';
-import Dashoard from './Components/Dashboard/Dashoard';
+import Dashboard from './Components/Dashboard/Dashoard';
 import ProfilePage from './Components/Static/Profile';
 import AllBlog from './Components/Blog/AllBlog';
 import AddBlog from './Components/Blog/AddBlog';
@@ -29,11 +29,11 @@ function App() {
  
 
   return (
-      <Routes theme={themes}>
+      <Routes >
         <Route path="/" element={<SignupCard/>}/>
         <Route path="/login" element= {<SimpleCard />}/>
         <Route path="/profile" element={<SidebarWithHeader><ProfilePage/></SidebarWithHeader>}/>
-        <Route path="/home" element={<SidebarWithHeader><Dashoard/></SidebarWithHeader>}/>
+        <Route path="/home" element={<SidebarWithHeader><Dashboard/></SidebarWithHeader>}/>
         <Route path="/blog" element={<SidebarWithHeader><AllBlog/></SidebarWithHeader>}/>
         <Route path="/addblog" element={<SidebarWithHeader><AddBlog/></SidebarWithHeader>}/>
         <Route path="/comments" element={<SidebarWithHeader><Comments/></SidebarWithHeader>}/>
