@@ -15,6 +15,7 @@ const SocialConfiguration = () => {
  
   return (
     <div className="addblog">
+      <h1>Add Social Media Links</h1>
       <Form
         labelCol={{
           span: 5,
@@ -25,7 +26,6 @@ const SocialConfiguration = () => {
         layout="horizontal"
         style={{}}
       >
-        <h1>Add Social Media Links</h1>
         <div className="blogdivision">
           <div className="addblog-main">
             <Form.Item id="Title">

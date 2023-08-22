@@ -1,8 +1,10 @@
 import React from "react"
 import MyImg from "../../MyImg.jpeg"
-// import {useColorMode } from "@chakra-ui/react"
-// import { BsSun, BsMoonStarsFill } from "react-icons/bs"
+import {useColorMode} from "@chakra-ui/react"
+import { BsSun, BsMoonStarsFill } from "react-icons/bs"
 import { Link } from "react-router-dom"
+// import {themes} from '../../theme';
+
 
 
 import {
@@ -30,7 +32,6 @@ import {
   FiTrendingUp,
   FiCompass,
   FiStar,
-  FiSettings,
   FiMenu,
   FiChevronDown,
   FiUser,
@@ -47,16 +48,18 @@ const LinkItems = [
   { name: "Comments", path: '/comments', icon: FiStar },
   { name: "Users",  path: '/users', icon: FiUser },
   { name: "Role",  path: '/roles', icon: FiRadio },
-  { name: "apperence",  path: '/', icon: FiSettings },
   { name: "Configuration",  path: '/configuration', icon: FiInfo },
-  { name: "Notification",  path: '/', icon: FiNavigation }
+  { name: "Notification",  path: '/notification', icon: FiNavigation }
 ]
 
 const SidebarContent = ({ onClose, ...rest }) => {
+  // const [colorCode, setColorCode] = useState(colorList[randomColor()])
+  // const { colorMode, toggleColorMode } = useColorMode()
   return (
     <Box
       transition="3s ease"
       bg={useColorModeValue("white", "gray.900")}
+      // bgColor={`${colorCode}`}
       borderRight="1px"
       borderRightColor={useColorModeValue("gray.200", "gray.700")}
       w={{ base: "full", md: 60 }}
@@ -122,6 +125,10 @@ const NavItem = ({ icon, children, ...rest }) => {
 }
 
 const MobileNav = ({ onOpen, ...rest }) => {
+  const { colorMode, toggleColorMode } = useColorMode();
+  
+
+  // const currentTheme = themes[selectedTheme];
   // const { colorMode, toggleColorMode } = useColorMode()
   return (
     <Flex
@@ -161,14 +168,19 @@ const MobileNav = ({ onOpen, ...rest }) => {
           icon={<FiHome />}
         />
         </NavLink>
-        {/* <IconButton
+
+       
+
+        <IconButton
         aria-label="Toggle Color Mode"
         onClick={toggleColorMode}
         _focus={{ boxShadow: "none" }}
         w="fit-content"
+        marginRight={5}
       >
         {colorMode === "light" ? <BsMoonStarsFill /> : <BsSun />}
-      </IconButton> */}
+      </IconButton>
+      
         <Flex alignItems={"center"}>
           <Menu>
             <MenuButton
@@ -223,7 +235,10 @@ const SidebarWithHeader = ({children}) => {
   const { isOpen, onOpen, onClose } = useDisclosure()
 
   return (
-    <Box minH="100vh" bg={useColorModeValue("gray.100", "gray.900")}>
+    <Box 
+    minH="100vh" 
+    bg={useColorModeValue("gray.100", "gray.900")}
+    >
       <SidebarContent
         onClose={() => onClose}
         display={{ base: "none", md: "block" }}
@@ -235,6 +250,7 @@ const SidebarWithHeader = ({children}) => {
         onClose={onClose}
         returnFocusOnClose={false}
         onOverlayClick={onClose}
+         bg={useColorModeValue("white", "gray.900")}
         size="full"
       >
         <DrawerContent>
@@ -243,7 +259,8 @@ const SidebarWithHeader = ({children}) => {
       </Drawer>
       {/* mobilenav */}
       <MobileNav onOpen={onOpen} />
-      <Box ml={{ base: 0, md: 60 }} p="4" >
+      
+      <Box ml={{ base: 0, md: 60 }} p="4"  bg={useColorModeValue("gray.100", "gray.700")}>
         {children}
         {/* Content */}
       </Box>

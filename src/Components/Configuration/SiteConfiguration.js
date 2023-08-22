@@ -19,6 +19,7 @@ const SiteConfiguration = () => {
  
   return (
     <div className="addblog">
+      <h1>Site Configuration</h1>
       <Form
         labelCol={{
           span: 5,
@@ -29,7 +30,6 @@ const SiteConfiguration = () => {
         layout="horizontal"
         style={{}}
       >
-        <h1>Site Configuration</h1>
         <div className="blogdivision">
           <div className="addblog-main">
             <Form.Item id="Title">
@@ -90,9 +90,6 @@ const SiteConfiguration = () => {
           <Button type="primary" danger>
             Submit
           </Button>
-          <NavLink to="/roles">
-            <Button danger>Back</Button>
-          </NavLink>
           <NavLink to="/socialconfig">
             <Button danger>Social Links</Button>
           </NavLink>
