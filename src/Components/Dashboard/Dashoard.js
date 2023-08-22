@@ -1,13 +1,13 @@
 import React from "react"
 
 import {
-  Flex,
   Container,
   Heading,
   Stack,
   Text,
   Button,
 } from "@chakra-ui/react"
+import { NavLink } from "react-router-dom"
 
 
 
@@ -30,24 +30,26 @@ export default function Dashboard() {
             made easy
           </Text>
         </Heading>
-        <Text  maxW={"3xl"}>
-        Effortlessly manage, create, and share content with our intuitive Content Management System.
-         Unlock the power of seamless collaboration and dynamic publishing today!
+        <Text maxW={"3xl"}>
+          Effortlessly manage, create, and share content with our intuitive Content Management System.
+          Unlock the power of seamless collaboration and dynamic publishing today!
         </Text>
         <Stack spacing={6} direction={"row"}>
-          <Button
-            rounded={"full"}
-            px={6}
-            colorScheme={"orange"}
-            bg={"orange.400"}
-            _hover={{ bg: "orange.500" }}
-          >
-            Get started
-          </Button>
+          <NavLink to='/addpages'>
+            <Button
+              rounded={"full"}
+              px={6}
+              colorScheme={"orange"}
+              bg={"orange.400"}
+              _hover={{ bg: "orange.500" }}
+            >
+              Get started
+            </Button>
+          </NavLink>
         </Stack>
-        <Flex w={"full"}>
-          
-        </Flex>
+        <div w={"full"} display={"Flex"} justifyContent={"Center"}>
+            
+        </div>
       </Stack>
     </Container>
   )

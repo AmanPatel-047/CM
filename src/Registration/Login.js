@@ -58,7 +58,9 @@ export default function SimpleCard() {
                 _hover={{
                   bg: 'blue.500',
                 }}>
+                  <Link to='/home'>
                 Sign in
+                  </Link>
               </Button>
             </Stack>
           </Stack>
