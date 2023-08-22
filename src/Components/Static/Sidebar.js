@@ -1,9 +1,9 @@
-import React from "react"
+import React, {useState} from "react"
 import MyImg from "../../MyImg.jpeg"
-// import {useColorMode } from "@chakra-ui/react"
-// import { BsSun, BsMoonStarsFill } from "react-icons/bs"
+import {useColorMode, Button} from "@chakra-ui/react"
+import { BsSun, BsMoonStarsFill } from "react-icons/bs"
 import { Link } from "react-router-dom"
-
+import {themes} from '../../theme';
 
 import {
   IconButton,
@@ -47,12 +47,13 @@ const LinkItems = [
   { name: "Comments", path: '/comments', icon: FiStar },
   { name: "Users",  path: '/users', icon: FiUser },
   { name: "Role",  path: '/roles', icon: FiRadio },
-  { name: "apperence",  path: '/', icon: FiSettings },
+  { name: "apperence",  path: '/theme', icon: FiSettings },
   { name: "Configuration",  path: '/configuration', icon: FiInfo },
-  { name: "Notification",  path: '/', icon: FiNavigation }
+  { name: "Notification",  path: '/notification', icon: FiNavigation }
 ]
 
 const SidebarContent = ({ onClose, ...rest }) => {
+  // const { colorMode, toggleColorMode } = useColorMode()
   return (
     <Box
       transition="3s ease"
@@ -122,6 +123,27 @@ const NavItem = ({ icon, children, ...rest }) => {
 }
 
 const MobileNav = ({ onOpen, ...rest }) => {
+  const { colorMode, toggleColorMode } = useColorMode();
+  const [selectedTheme, setSelectedTheme] = useState("light");
+  const themeOptions = Object.keys(themes);
+
+  const handleThemeChange = () => {
+    const currentIndex = themeOptions.indexOf(selectedTheme);
+    const nextIndex = (currentIndex + 1) % themeOptions.length;
+    setSelectedTheme(themeOptions[nextIndex]);
+    const newTheme = themes[themeOptions[nextIndex]];
+    // customTheme.colors = newTheme.colors;
+    // toggleColorMode(nextIndex);
+    toggleColorMode();
+
+    const updatedCustomTheme = extendTheme({ ...initialCustomTheme, colors: newTheme.colors });
+    setCustomTheme(updatedCustomTheme);
+    
+  };
+
+
+
+  // const currentTheme = themes[selectedTheme];
   // const { colorMode, toggleColorMode } = useColorMode()
   return (
     <Flex
@@ -161,14 +183,25 @@ const MobileNav = ({ onOpen, ...rest }) => {
           icon={<FiHome />}
         />
         </NavLink>
-        {/* <IconButton
+
+        <Button onClick={handleThemeChange}>
+        {selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1)}
+      </Button>
+
+        <IconButton
         aria-label="Toggle Color Mode"
-        onClick={toggleColorMode}
+        // onClick={() => {
+          
+        //   handleThemeChange();
+        // }}
+        onClick={handleThemeChange}
         _focus={{ boxShadow: "none" }}
         w="fit-content"
+        marginRight={5}
       >
         {colorMode === "light" ? <BsMoonStarsFill /> : <BsSun />}
-      </IconButton> */}
+      </IconButton>
+      
         <Flex alignItems={"center"}>
           <Menu>
             <MenuButton
@@ -235,6 +268,7 @@ const SidebarWithHeader = ({children}) => {
         onClose={onClose}
         returnFocusOnClose={false}
         onOverlayClick={onClose}
+         bg={useColorModeValue("white", "gray.900")}
         size="full"
       >
         <DrawerContent>
@@ -243,7 +277,7 @@ const SidebarWithHeader = ({children}) => {
       </Drawer>
       {/* mobilenav */}
       <MobileNav onOpen={onOpen} />
-      <Box ml={{ base: 0, md: 60 }} p="4" >
+      <Box ml={{ base: 0, md: 60 }} p="4"  bg={useColorModeValue("gray.100", "gray.700")}>
         {children}
         {/* Content */}
       </Box>

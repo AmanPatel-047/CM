@@ -1,5 +1,8 @@
 import './App.css';
 import { Route, Routes} from 'react-router-dom';
+// import { ChakraProvider, CSSReset } from "@chakra-ui/react";
+import {themes} from './theme';
+
 
 import SignupCard from './Registration/Register';
 import SimpleCard from './Registration/Login';
@@ -17,6 +20,7 @@ import Roles from './Components/Roles/AllRoles';
 import AddRole from './Components/Roles/AddRole';
 import SiteConfiguration from './Components/Configuration/SiteConfiguration';
 import SocialConfiguration from './Components/Configuration/SocialConfiguration';
+import Notification from './Components/Notification/Notification';
 
 
 
@@ -25,7 +29,7 @@ function App() {
  
 
   return (
-      <Routes>
+      <Routes theme={themes}>
         <Route path="/" element={<SignupCard/>}/>
         <Route path="/login" element= {<SimpleCard />}/>
         <Route path="/profile" element={<SidebarWithHeader><ProfilePage/></SidebarWithHeader>}/>
@@ -41,6 +45,7 @@ function App() {
         <Route path="/addrole" element={<SidebarWithHeader><AddRole/></SidebarWithHeader>}/>
         <Route path="/configuration" element={<SidebarWithHeader><SiteConfiguration/></SidebarWithHeader>}/>
         <Route path="/socialconfig" element={<SidebarWithHeader><SocialConfiguration/></SidebarWithHeader>}/>
+        <Route path="/notification" element={<SidebarWithHeader><Notification/></SidebarWithHeader>}/>
       
       </Routes>
     
