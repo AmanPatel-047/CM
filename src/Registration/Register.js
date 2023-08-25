@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import { Link, NavLink } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 // import { useMutation,  useQueryClient } from 'react-query';
 import { useAuth } from './authContext';
@@ -31,15 +32,42 @@ export default function SignupCard() {
   const [signupError, setSignupError] = useState(null);
 
   const auth = useAuth();
+  const navigate = useNavigate();
+  const isEmailValid = (email) => {
+    // You can implement your own email format validation logic here.
+    // For a simple check, you can use a regular expression.
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
 
   const handleSignup = async () => {
     setIsSigningUp(true);
     setSignupError(null);
 
     try {
-      // Replace with your actual signup logic from authContext.js
-      await auth.signup(email, password);
-      // User signed up successfully
+      if (
+        firstName &&
+        lastName &&
+        email &&
+        password &&
+        isEmailValid(email) // Step 3: Check email format
+      ) {
+        // All fields are filled and email format is valid
+        await auth.signup(email, password);
+
+        const userInfo = {
+          firstName,
+          lastName,
+          email,
+          password
+        };
+        localStorage.setItem('userInfo', JSON.stringify(userInfo));
+  
+
+        navigate('/login'); // Step 4: Navigate to login page
+      } else {
+        setSignupError('Please fill in all fields correctly.');
+      }
     } catch (error) {
       setSignupError(error.message);
     } finally {
@@ -82,11 +110,11 @@ export default function SignupCard() {
                 </FormControl>
               </Box>
             </HStack>
-            <FormControl id="email" isRequired>
+            <FormControl id="email" Required>
               <FormLabel>Email address</FormLabel>
               <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
             </FormControl>
-            <FormControl id="password" isRequired>
+            <FormControl id="password" Required>
               <FormLabel>Password</FormLabel>
               <InputGroup>
                 <Input
@@ -115,11 +143,12 @@ export default function SignupCard() {
                   bg: 'blue.500',
                 }}
                 disabled={!firstName || !lastName || !email || !password || isSigningUp}>
-                {(!firstName || !lastName || !email || !password || isSigningUp) ? (
+                {/* {(!firstName || !lastName || !email || !password || isSigningUp) ? (
                   <span>Sign up</span>
                 ) : (
-                  <NavLink to="/login">Sign up</NavLink>
-                )}
+                  <NavLink>Sign up</NavLink>
+                )} */}
+                SignUp
               </Button>
             </Stack>
             <Stack pt={6}>

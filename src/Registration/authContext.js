@@ -1,18 +1,23 @@
 // authContext.js
-import React, { useContext, createContext } from 'react';
+import React, { createContext, useContext } from 'react';
 
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
-  // Replace this with your actual authentication logic
+  // You can implement your actual authentication logic here
   const signup = async (email, password) => {
-    // Simulate a signup process
-    // You should implement your actual signup logic here
-    const user = { email };
-    return user;
+    // Simulate a signup process with a delay
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    // Replace this with actual authentication logic
+    console.log('Signup successful!', email);
   };
 
-  return <AuthContext.Provider value={{ signup }}>{children}</AuthContext.Provider>;
+  const auth = {
+    signup,
+    // Other authentication methods and states can be added here
+  };
+
+  return <AuthContext.Provider value={auth}>{children}</AuthContext.Provider>;
 }
 
 export function useAuth() {
