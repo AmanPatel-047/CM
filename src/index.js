@@ -6,6 +6,8 @@ import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import { ChakraProvider } from "@chakra-ui/react";
 import {QueryClientProvider, QueryClient } from 'react-query';
+// import { Provider } from "react-redux";
+
 
 
 const queryClient = new QueryClient();
@@ -16,9 +18,11 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <BrowserRouter>
     <QueryClientProvider client={queryClient}>
+      {/* <Provider > */}
     <ChakraProvider >
       <App />
     </ChakraProvider>
+    {/* </Provider> */}
     </QueryClientProvider>
   </BrowserRouter>
 );

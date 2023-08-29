@@ -24,13 +24,7 @@ const AllComponents = [
 
 
 
-// const Components = [
-//   Hero,
-//   Feature,
-//   Services,
-//   // Facts,
-//   // Footer,
-// ];
+
 
 
 const AddPages = ({onSetPreviewElement}) => {
@@ -49,6 +43,9 @@ const AddPages = ({onSetPreviewElement}) => {
   const handleCancel = () => {
     setIsModalOpen(false); 
   };
+
+  // const Components = selectedComponents;
+
 
   const handleComponentToggle = (componentName) => {
     // if (selectedComponents.includes(componentName)) {
@@ -71,6 +68,7 @@ const AddPages = ({onSetPreviewElement}) => {
     navigate('/addpages/preview')
 
   };
+
 
   return (
     <div className="addblog">
