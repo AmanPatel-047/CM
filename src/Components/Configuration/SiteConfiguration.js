@@ -19,7 +19,7 @@ const SiteConfiguration = () => {
  
   return (
     <div className="addblog">
-      <h1>Site Configuration</h1>
+      <h1 style={{ fontWeight: 700 }}>Site Configuration</h1>
       <Form
         labelCol={{
           span: 5,

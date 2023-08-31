@@ -8,7 +8,7 @@ const Notification = () => {
   return (
     <div>
         <div className="table-main">
-       <h1>All Notification</h1>
+       <h1 style={{ fontWeight: 700 }}>All Notification</h1>
       </div>
       <TableData/>
     </div>

@@ -110,6 +110,7 @@ export default function SimpleCard() {
                 <Text color={'blue.400'}><Link to="/" >Forget Password</Link></Text>
               </Stack>
               <Button
+              loadingText="Logging"
               onClick={handleSignIn}
                 bg={'blue.400'}
                 color={'white'}

@@ -9,7 +9,7 @@ const AllPages = () => {
   return (
     <div>
         <div className="table-main">
-       <h1>Pages</h1>
+       <h1 style={{ fontWeight: 700 }}>All Pages</h1>
         <NavLink to="/addpages">
           <Button type="primary" danger>
             Add Section

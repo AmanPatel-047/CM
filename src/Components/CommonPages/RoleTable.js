@@ -6,51 +6,9 @@ import { Button, Input, Space, Table } from "antd";
 const data = [
   {
     key: "1",
-    name: "John Brown",
-    age: 32,
-    address: "New York No. 1 Lake Park",
-  },
-  {
-    key: "2",
-    name: "Joe Black",
-    age: 42,
-    address: "London No. 1 Lake Park",
-  },
-  {
-    key: "3",
-    name: "Jim Green",
-    age: 32,
-    address: "Sydney No. 1 Lake Park",
-  },
-  {
-    key: "4",
-    name: "Jim Red",
-    age: 32,
-    address: "London No. 2 Lake Park",
-  },
-  {
-    key: "5",
-    name: "Joe Black",
-    age: 42,
-    address: "London No. 1 Lake Park",
-  },
-  {
-    key: "6",
-    name: "Jim Green",
-    age: 32,
-    address: "Sydney No. 1 Lake Park",
-  },
-  {
-    key: "7",
-    name: "Joe Black",
-    age: 42,
-    address: "London No. 1 Lake Park",
-  },
-  {
-    key: "8",
-    name: "Jim Green",
-    age: 32,
-    address: "Sydney No. 1 Lake Park",
+    name: "Aman",
+    mail: "aman.patel@averybit.in",
+    role: "admin",
   },
 ];
 const RoleTable = () => {
@@ -180,20 +138,20 @@ const RoleTable = () => {
       title: "Name",
       dataIndex: "name",
       key: "name",
-      width: "30%",
+      width: "20%",
       ...getColumnSearchProps("name"),
     },
     {
-      title: "Age",
-      dataIndex: "age",
-      key: "age",
-      width: "20%",
+      title: "Mail",
+      dataIndex: "mail",
+      key: "mail",
+      width: "30%",
       ...getColumnSearchProps("age"),
     },
     {
-      title: "Address",
-      dataIndex: "address",
-      key: "address",
+      title: "Role",
+      dataIndex: "role",
+      key: "role",
       ...getColumnSearchProps("address"),
       sorter: (a, b) => a.address.length - b.address.length,
       sortDirections: ["descend", "ascend"],
@@ -203,8 +161,7 @@ const RoleTable = () => {
       key: "action",
       render: (_, record) => (
         <Space size="middle">
-          <a>Edit</a>
-          <a>Delete</a>
+          <button>Delete</button>
         </Space>
       ),
     },

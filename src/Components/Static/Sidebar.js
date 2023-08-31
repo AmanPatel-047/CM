@@ -3,6 +3,8 @@ import MyImg from "../../MyImg.jpeg"
 import {useColorMode} from "@chakra-ui/react"
 import { BsSun, BsMoonStarsFill } from "react-icons/bs"
 import { Link } from "react-router-dom"
+import cmsLogo from './cms.png';
+
 // import {themes} from '../../theme';
 
 
@@ -67,14 +69,15 @@ const SidebarContent = ({ onClose, ...rest }) => {
       h="full"
       {...rest}
     >
-      <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
-        <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold">
-          Logo
-        </Text>
+      <Flex h="20" alignItems="center" mx="12" justifyContent="space-between">
+        <img src={cmsLogo} alt="Logo"/>
+        {/* <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold">
+      
+        </Text> */}
         <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
       </Flex>
       {LinkItems.map(link => (
-        <Link to={link.path}>
+        <Link to={link.path} >
           <NavItem key={link.name} icon={link.icon}>
             {link.name}
           </NavItem>
@@ -149,15 +152,17 @@ const MobileNav = ({ onOpen, ...rest }) => {
         aria-label="open menu"
         icon={<FiMenu />}
       />
-
-      <Text
+      <Flex h="20"  display={{ base: "flex", md: "none" }} m={5} alignItems="center" justifyContent="space-between">
+      <img src={cmsLogo} alt="Logo" width={80}/>
+      </Flex>
+      {/* <Text
         display={{ base: "flex", md: "none" }}
         fontSize="2xl"
         fontFamily="monospace"
         fontWeight="bold"
       >
         Logo
-      </Text>
+      </Text> */}
 
       <HStack spacing={{ base: "0", md: "6" }}>
         <NavLink to="/home">
@@ -261,8 +266,8 @@ const SidebarWithHeader = ({children}) => {
       <MobileNav onOpen={onOpen} />
       
       <Box ml={{ base: 0, md: 60 }} p="4"  bg={useColorModeValue("gray.100", "gray.700")}>
-        {children}
         {/* Content */}
+        {children}
       </Box>
     </Box>
   )

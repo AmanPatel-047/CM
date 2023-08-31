@@ -8,7 +8,7 @@ const Roles = () => {
   return (
     <div>
         <div className="table-main">
-       <h1>All Roles</h1>
+       <h1 style={{ fontWeight: 700 }}>All Roles</h1>
         <NavLink to="/addrole">
           <Button type="primary" danger>
             Add Role

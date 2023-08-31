@@ -8,7 +8,7 @@ const AllUsers = () => {
   return (
     <div>
         <div className="table-main">
-       <h1>Users</h1>
+       <h1 style={{ fontWeight: 700 }}>All Users</h1>
         <NavLink to="/adduser">
           <Button type="primary" danger>
             Add User

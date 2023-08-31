@@ -1,62 +1,115 @@
 import { SearchOutlined } from "@ant-design/icons";
 import React, { useRef, useState } from "react";
+import axios from "axios"; 
 import Highlighter from "react-highlight-words";
 import { Button, Input, Space, Table } from "antd";
+import { useEffect } from "react";
 
-const data = [
-  {
-    key: "1",
-    name: "John Brown",
-    age: 32,
-    address: "New York No. 1 Lake Park",
-  },
-  {
-    key: "2",
-    name: "Joe Black",
-    age: 42,
-    address: "London No. 1 Lake Park",
-  },
-  {
-    key: "3",
-    name: "Jim Green",
-    age: 32,
-    address: "Sydney No. 1 Lake Park",
-  },
-  {
-    key: "4",
-    name: "Jim Red",
-    age: 32,
-    address: "London No. 2 Lake Park",
-  },
-  {
-    key: "5",
-    name: "Joe Black",
-    age: 42,
-    address: "London No. 1 Lake Park",
-  },
-  {
-    key: "6",
-    name: "Jim Green",
-    age: 32,
-    address: "Sydney No. 1 Lake Park",
-  },
-  {
-    key: "7",
-    name: "Joe Black",
-    age: 42,
-    address: "London No. 1 Lake Park",
-  },
-  {
-    key: "8",
-    name: "Jim Green",
-    age: 32,
-    address: "Sydney No. 1 Lake Park",
-  },
-];
+// const data = [
+//   {
+//     key: "1",
+//     name: "John Brown",
+//     age: 32,
+//     address: "New York No. 1 Lake Park",
+//   },
+//   {
+//     key: "2",
+//     name: "Joe Black",
+//     age: 42,
+//     address: "London No. 1 Lake Park",
+//   },
+//   {
+//     key: "3",
+//     name: "Jim Green",
+//     age: 32,
+//     address: "Sydney No. 1 Lake Park",
+//   },
+//   {
+//     key: "4",
+//     name: "Jim Red",
+//     age: 32,
+//     address: "London No. 2 Lake Park",
+//   },
+//   {
+//     key: "5",
+//     name: "Joe Black",
+//     age: 42,
+//     address: "London No. 1 Lake Park",
+//   },
+//   {
+//     key: "6",
+//     name: "Jim Green",
+//     age: 32,
+//     address: "Sydney No. 1 Lake Park",
+//   },
+//   {
+//     key: "7",
+//     name: "Joe Black",
+//     age: 42,
+//     address: "London No. 1 Lake Park",
+//   },
+//   {
+//     key: "8",
+//     name: "Jim Green",
+//     age: 32,
+//     address: "Sydney No. 1 Lake Park",
+//   },
+// ];
 const TableData = () => {
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
+  const [data, setData] = useState([]);
+  const [columns, setColumns] = useState([]);
   const searchInput = useRef(null);
+
+  useEffect(() => {
+    // Fetch data from API using Axios
+    const fetchDataFromAPI = async () => {
+      try {
+        const response = await axios.get("http://localhost:3001/blog");
+        const apiData = response.data;
+
+        // Assuming the API response has a "data" array and a "columns" array
+        setData(apiData.data);
+        setColumns(apiData.columns.map(column => ({
+          title: column,
+          dataIndex: column,
+          key: column,
+          ...getColumnSearchProps(column),
+        })));
+      } catch (error) {
+        console.error("Error fetching data from API:", error);
+      }
+    };
+
+    fetchDataFromAPI();
+  }, []);
+
+   // Handler for the Delete button click
+   const handleDelete = async (rowNo) => {
+    try {
+      // Send the rowNo to the DELETE API endpoint
+      await axios.delete(`http://localhost:3001/blog/${rowNo}`);
+      
+      // Update the UI to remove the deleted entry
+      setData((prevData) => prevData.filter((_, index) => index !== rowNo - 1));
+    } catch (error) {
+      console.error("Error deleting blog:", error);
+      // Handle deletion error, e.g., show an error message
+    }
+  };
+  
+  
+
+  // Add a custom "Action" column
+  const actionColumn = {
+    title: 'Action',
+    key: 'action',
+    render: (text, record) => (
+      <Button onClick={() => handleDelete(record.No)}>Delete</Button>
+    ),
+  };
+
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm();
     setSearchText(selectedKeys[0]);
@@ -169,50 +222,50 @@ const TableData = () => {
         text
       ),
   });
-  const columns = [
-    {
-      title: "ID",
-      dataIndex: "key",
-      key: "key",
-      ...getColumnSearchProps("key"),
-    },
-    {
-      title: "Name",
-      dataIndex: "name",
-      key: "name",
-      width: "30%",
-      ...getColumnSearchProps("name"),
-    },
-    {
-      title: "Age",
-      dataIndex: "age",
-      key: "age",
-      width: "20%",
-      ...getColumnSearchProps("age"),
-    },
-    {
-      title: "Address",
-      dataIndex: "address",
-      key: "address",
-      ...getColumnSearchProps("address"),
-      sorter: (a, b) => a.address.length - b.address.length,
-      sortDirections: ["descend", "ascend"],
-    },
-    {
-      title: "Action",
-      key: "action",
-      render: (_, record) => (
-        <Space size="middle">
-          <a>Edit</a>
-          <a>Delete</a>
-        </Space>
-      ),
-    },
-  ];
+  // const columns = [
+  //   {
+  //     title: "ID",
+  //     dataIndex: "key",
+  //     key: "key",
+  //     ...getColumnSearchProps("key"),
+  //   },
+  //   {
+  //     title: "Name",
+  //     dataIndex: "name",
+  //     key: "name",
+  //     width: "30%",
+  //     ...getColumnSearchProps("name"),
+  //   },
+  //   {
+  //     title: "Age",
+  //     dataIndex: "age",
+  //     key: "age",
+  //     width: "20%",
+  //     ...getColumnSearchProps("age"),
+  //   },
+  //   {
+  //     title: "Address",
+  //     dataIndex: "address",
+  //     key: "address",
+  //     ...getColumnSearchProps("address"),
+  //     sorter: (a, b) => a.address.length - b.address.length,
+  //     sortDirections: ["descend", "ascend"],
+  //   },
+  //   {
+  //     title: "Action",
+  //     key: "action",
+  //     render: (_, record) => (
+  //       <Space size="middle">
+  //         <a>Edit</a>
+  //         <a>Delete</a>
+  //       </Space>
+  //     ),
+  //   },
+  // ];
   return (
     <div>
       <div style={{ overflowX: "auto" }}>
-        <Table columns={columns} dataSource={data} scroll={{ x: "100%"}} />
+        <Table columns={[...columns, actionColumn]} dataSource={data} scroll={{ x: "100%"}} />
       </div>
     </div>
   );

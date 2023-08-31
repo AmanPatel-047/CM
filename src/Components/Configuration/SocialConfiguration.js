@@ -15,7 +15,7 @@ const SocialConfiguration = () => {
  
   return (
     <div className="addblog">
-      <h1>Add Social Media Links</h1>
+      <h1 style={{ fontWeight: 700 }}>Add Social Media Links</h1>
       <Form
         labelCol={{
           span: 5,

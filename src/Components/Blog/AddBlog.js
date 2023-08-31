@@ -1,17 +1,45 @@
-import { PlusOutlined } from "@ant-design/icons";
-import React from "react";
-import { Button, DatePicker, Form, Input, Select, Upload } from "antd";
+// import { PlusOutlined } from "@ant-design/icons";
+import React, {useState} from "react";
+import { Button, DatePicker, Form, Input, Select} from "antd";
 import '../CommonPages/Table.css'
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import axios from "axios";
+import moment from "moment"; 
+
 
 const { TextArea } = Input;
-const normFile = (e) => {
-  if (Array.isArray(e)) {
-    return e;
-  }
-  return e?.fileList;
-};
+
+
 const AddBlog = () => {
+
+  const navigate = useNavigate();
+  const [title, setTitle] = useState("");
+  const [blogContent, setBlogContent] = useState("");
+  const [status, setStatus] = useState("pending");
+  const [publishOn, setPublishOn] = useState(null);
+  const [author, setAuthor] = useState("");
+
+  const handleSubmit =() => {
+    try {
+      const data = {
+        title,
+        blogContent,
+        status,
+        publishOn,
+        author,
+      };
+
+      const response = axios.post("http://localhost:3001/addblog", data);
+      console.log("API response:", response.data);
+      navigate("/blog");
+      // Handle successful submission...
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      // Handle form submission error...
+    }
+  };
+
+
   return (
     <div className="addblog">
       <Form
@@ -30,27 +58,32 @@ const AddBlog = () => {
         <div className="addblog-main">
           <Form.Item id="Title">
             <label>Title</label>
-            <Input />
+            <Input value={title} onChange={(e) => setTitle(e.target.value)} />
           </Form.Item>
 
           <Form.Item id="BlogContent">
             <label>BlogContent</label>
-            <TextArea rows={4} />
+            <TextArea rows={4} value={blogContent}
+            onChange={(e) => setBlogContent(e.target.value)}/>
           </Form.Item>
         </div>
 
         <div className="addblog-main">
           <Form.Item id="Status">
             <label>Status</label>
-            <Select>
+            <Select value={status} onChange={(value) => setStatus(value)}>
               <Select.Option value="pending">Pending</Select.Option>
               <Select.Option value="publish">Publish</Select.Option>
             </Select>
           </Form.Item>
 
-            <label>PublishOn</label>
-          <Form.Item id="PublishOn">
-            <DatePicker />
+          <label>PublishOn</label>
+          <Form.Item>
+
+          <DatePicker
+            value={publishOn ? moment(publishOn) : null} // Set the value using moment
+            onChange={(date) => setPublishOn(date ? date.toDate() : null)} // Convert to JavaScript Date object
+          />
           </Form.Item>
         </div>
         </div>
@@ -59,41 +92,19 @@ const AddBlog = () => {
         <div className="addblog-main">
           <Form.Item >
             <label id="author">Author</label>
-            <Input id="author" placeholder="Name" type="text"/>
+            <Input id="author" placeholder="Name" type="text"
+            value={author}
+            onChange={(e) => setAuthor(e.target.value)}/>
           </Form.Item>
         </div>
 
-        <div className="addblog-main">
-          <Form.Item
-            id="Upload"
-            valuePropName="fileList"
-            getValueFromEvent={normFile}
-            >
-              <label>Upload</label>
-            <Upload action="/upload.do" listType="picture-card">
-              <div>
-                <PlusOutlined />
-                <div
-                  style={{
-                    marginTop: 8,
-                  }}
-                >
-                  Upload
-                </div>
-              </div>
-            </Upload>
-          </Form.Item>
-
-        </div>
         </div>
           <div className="blogbtn" >
-            <Button type="primary" danger>Submit</Button>
+            <Button type="primary" danger onClick={handleSubmit}>Submit</Button>
             <NavLink to='/blog'>
             <Button danger>Back</Button>
             </NavLink>
-          </div>
-         
-        
+          </div>  
       </Form>
     </div>
   );
